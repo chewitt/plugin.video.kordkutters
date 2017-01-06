@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 """
- Author: enen92 
+ Author: enen92
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- 
+
 """
 import xbmc
 import xbmcgui
@@ -27,11 +27,11 @@ import sys
 
 ####### Specific youtube, youtube channel or addon configuration variables ###########
 #youtube
-channel_id = "UCtp9s4L-kxIRy221VVtgjXg"
-youtube_api_key = "AIzaSyAxaHJTQ5zgh86wk7geOwm-y0YyNMcEkSc" #If you fork this addon please register another api key (https://developers.google.com/youtube/android/player/register)
+channel_id = "UC7FSO0rXOtO6w_poBLvvjDw"
+youtube_api_key = "AIzaSyB2MsOGtRbAdmk6oxahHOkktc0qVFf_OT4" #If you fork this addon please register another api key (https://developers.google.com/youtube/android/player/register)
 #youtube channel
-cast = ['Nathan Betzen','Ned Scott'] #Team members / Cast of the channel. [] if none
-tvshowtitle = 'KordKutters' #Name of the show
+cast = ['Team LibreELEC'] #Team members / Cast of the channel. [] if none
+tvshowtitle = 'LibreELEC on YouTube' #Name of the show
 status = 'Continuing' #Status of the show
 episode_playlists = ['PL5BrgZd5yMYgty7363LhlkR8iPJ73-fCZ'] #List of playlists to consider every integer as the episode number
 
@@ -56,7 +56,7 @@ def makefolders():
 
 def translate(text):
 	return selfAddon.getLocalizedString(text).encode('utf-8')
-	
+
 def add_sort_methods():
 	sort_methods = [xbmcplugin.SORT_METHOD_UNSORTED,xbmcplugin.SORT_METHOD_LABEL,xbmcplugin.SORT_METHOD_DATE,xbmcplugin.SORT_METHOD_DURATION,xbmcplugin.SORT_METHOD_EPISODE]
 	for method in sort_methods:

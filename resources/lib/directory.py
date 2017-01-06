@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 """
- Author: enen92 
+ Author: enen92
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- 
+
 """
 import xbmc,xbmcplugin,xbmcaddon,xbmcgui,sys,os,urllib,xbmcvfs
 from common_variables import *

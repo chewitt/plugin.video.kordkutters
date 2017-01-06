@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 """
- Author: enen92 
+ Author: enen92
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -15,14 +15,14 @@
 
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- 
+
 """
 
-def save(filename,contents):  
+def save(filename,contents):
      fh = open(filename, 'w')
-     fh.write(contents)  
+     fh.write(contents)
      fh.close()
-     
+
 def readfile(filename):
 	f = open(filename, "r")
 	string = f.read()

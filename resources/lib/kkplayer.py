@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 """
- Author: enen92 
+ Author: enen92
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- 
+
 """
 
 import xbmc
@@ -29,12 +29,12 @@ class KKPlayer(xbmc.Player):
 		self.urlwatched = mainurl
 		self.timepos = 0
 		self.totalTime = 0
-            
+
 	def onPlayBackStarted(self):
 		self._playbackLock = True
 		self.playingfile = self.getPlayingFile()
 		self.totalTime = self.getTotalTime()
-                              
+
 	def onPlayBackStopped(self):
 		print("player stopped")
 		self._playbackLock = False
@@ -47,7 +47,7 @@ class KKPlayer(xbmc.Player):
 		except: pass
 
 
-	def onPlayBackEnded(self):              
+	def onPlayBackEnded(self):
 		self.onPlayBackStopped()
 		print("playbackended")
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 """
- Author: enen92 
+ Author: enen92
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- 
+
 """
 import urllib
 import json
@@ -45,7 +45,7 @@ def get_playlists():
 #get list of live videos
 def get_live_videos():
 	list_of_tupple_items = []
-	
+
 	url = 'https://www.googleapis.com/youtube/v3/search?eventType=live&part=snippet&channelId='+channel_id+'&type=video&maxResults=50&key='+youtube_api_key
 	raw = urllib.urlopen(url)
 	resp = json.load(raw)
@@ -60,7 +60,7 @@ def get_live_videos():
 		raw = urllib.urlopen(url_api)
 		resp = json.load(raw)
 		raw.close()
-		
+
 		for item in resp["items"]:
 			title = item["snippet"]["title"]
 			plot = item["snippet"]["description"]
@@ -68,17 +68,17 @@ def get_live_videos():
 			aired = item["snippet"]["publishedAt"]
 			videoid = item["id"]
 			episode = re.findall('(\d+)',title)
-						
-			try: 
+
+			try:
 				aired = re.compile('(.+?)-(.+?)-(.+?)T').findall(aired)[0]
 				date = aired[2] + '.' + aired[1] + '.' + aired[0]
 				aired = aired[0]+'-'+aired[1]+'-'+aired[2]
-			except: 
+			except:
 				aired = ''
 				date = ''
-			
+
 			infolabels = {'plot':plot.encode('utf-8'),'tvshowtitle':tvshowtitle,'title':title.encode('utf-8'),'originaltitle':title.encode('utf-8'),'aired':aired,'date':date,'status':status,'cast':cast,'episode':episode,'playcount':0}
-			
+
 			#Video and audio info
 			video_info = { 'codec': 'avc1', 'aspect' : 1.78 }
 			audio_info = { 'codec': 'aac', 'language' : 'en' }
@@ -96,26 +96,26 @@ def get_live_videos():
 						video_info['width'] = 854
 						video_info['height'] = 480
 						audio_info['channels'] = 1
-				except: pass	
+				except: pass
 			except:
 				video_info['width'] = 854
 				video_info['height'] = 480
-				audio_info['channels'] = 1		
-			
+				audio_info['channels'] = 1
+
 			#build and append item
 			tupple = build_episode_item(title.encode('utf-8'),videoid,5,thumb,1,infolabels,video_info,audio_info)
 			list_of_tupple_items.append(tupple)
-		
+
 		if list_of_tupple_items:
 			number_of_items = len(list_of_tupple_items)
 			xbmcplugin.addDirectoryItems(int(sys.argv[1]), list_of_tupple_items,totalItems=number_of_items)
 			add_sort_methods()
-				
+
 		xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
 	else:
 		msgok(translate(30000),translate(30002))
 		sys.exit(0)
-		
+
 #Get uploads playlist id and return the list of all videos videos uploaded by the channel user
 def get_all_youtube_uploads():
 	url_api = 'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id='+channel_id+'&key='+youtube_api_key
@@ -163,7 +163,7 @@ def return_youtubevideos(name,url,token,page):
 		resp = json.load(raw)
 		raw.close()
 		returnedVideos = resp["items"]
-		
+
 		for video in returnedVideos:
 			title = video["snippet"]["title"]
 			plot = video["snippet"]["description"]
@@ -174,11 +174,11 @@ def return_youtubevideos(name,url,token,page):
 			duration_string = video["contentDetails"]["duration"]
 			try: duration = return_duration_as_seconds(duration_string)
 			except: duration = '0'
-			try: 
+			try:
 				aired = re.compile('(.+?)-(.+?)-(.+?)T').findall(aired)[0]
 				date = aired[2] + '.' + aired[1] + '.' + aired[0]
 				aired = aired[0]+'-'+aired[1]+'-'+aired[2]
-			except: 
+			except:
 				aired = ''
 				date = ''
 			try:
@@ -191,9 +191,9 @@ def return_youtubevideos(name,url,token,page):
 			#playcount
 			if os.path.exists(os.path.join(watchedfolder,str(videoid)+'.txt')) : playcount = 1
 			else: playcount = 0
-		
+
 			infolabels = {'plot':plot.encode('utf-8'),'aired':aired,'date':date,'tvshowtitle':tvshowtitle,'title':title.encode('utf-8'),'originaltitle':title.encode('utf-8'),'status':status,'cast':cast,'duration':duration,'episode':episode,'playcount':playcount}
-			
+
 			#Video and audio info
 			video_info = { 'codec': 'avc1', 'aspect' : 1.78 }
 			audio_info = { 'codec': 'aac', 'language' : 'en' }
@@ -211,12 +211,12 @@ def return_youtubevideos(name,url,token,page):
 						video_info['width'] = 854
 						video_info['height'] = 480
 						audio_info['channels'] = 1
-				except: pass	
+				except: pass
 			except:
 				video_info['width'] = 854
 				video_info['height'] = 480
-				audio_info['channels'] = 1		
-			
+				audio_info['channels'] = 1
+
 			#build and append item
 			tupple = build_episode_item(title.encode('utf-8'),videoid,5,thumb,page,infolabels,video_info,audio_info)
 			list_of_tupple_items.append(tupple)
@@ -224,14 +224,14 @@ def return_youtubevideos(name,url,token,page):
 	if list_of_tupple_items:
 		number_of_items = len(list_of_tupple_items)
 		xbmcplugin.addDirectoryItems(int(sys.argv[1]), list_of_tupple_items,totalItems=number_of_items)
-	
+
 		add_sort_methods()
 	if totalpages > 1 and (page+1) <= totalpages:
 		addDir('[B]'+translate(30010)+'[/B] '+str(page)+'/'+str(totalpages),url,1,os.path.join(artfolder,'next.png'),page+1,1,token=nextpagetoken)
 	xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
 	return
 
-#Play a youtube video given the video_id	
+#Play a youtube video given the video_id
 def play_youtube_video(url):
 	video_url = 'plugin://plugin.video.youtube/play/?video_id='+url
 	item = xbmcgui.ListItem(path=video_url)
@@ -242,7 +242,7 @@ def play_youtube_video(url):
 		player._trackPosition()
 		xbmc.sleep(1000)
 	return
-	
+
 #receives a duration string and returns the duration in seconds (as string)
 def return_duration_as_seconds(string):
 	totalseconds = 0
@@ -253,5 +253,3 @@ def return_duration_as_seconds(string):
 	if minutes: totalseconds += 60*int(minutes[0])
 	if seconds: totalseconds += int(seconds[0])
 	return str(totalseconds)
-	
-
